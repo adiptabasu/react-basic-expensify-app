@@ -9,8 +9,9 @@ module.exports = (env, argv) => {
         // entry: './src/playground/hoc.js',
         plugins: [new MiniCssExtractPlugin()],
         output: {
-            path: path.join(__dirname, 'public'),
-            filename: 'bundle.js'
+            path: path.join(__dirname, 'public', 'dist'),
+            filename: 'bundle.js',
+            publicPath: path.join(__dirname, 'public', 'dist')
         },
         module: {
             rules: [{
@@ -55,7 +56,7 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: 'styles.css'
+                filename: './styles.css'
             })
         ],
         devtool: isProduction ? 'source-map' : 'inline-cheap-module-source-map',
@@ -65,11 +66,12 @@ module.exports = (env, argv) => {
             },
             // contentBase: path.join(__dirname, 'public')
             static: {
-                directory: path.join(__dirname, 'public'),
+                directory: path.join(__dirname, 'public', 'dist'),
             },
             compress: true,
             port: 3000,
             historyApiFallback: true//added for react-router
+            // publicPath: '/dist/'
         }
     }
 };
