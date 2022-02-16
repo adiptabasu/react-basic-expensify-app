@@ -10,9 +10,9 @@ exports[`should render the expense list item with expenses 1`] = `
     </h3>
   </Link>
   <p>
-    19500
+    $195.00
     -
-    -345600000
+    December 28th, 1969
   </p>
   <button
     onClick={[Function]}
