@@ -1,6 +1,6 @@
 // import firebase from 'firebase';
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from 'firebase/database'
+import { getDatabase, ref, set, update, remove } from 'firebase/database';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBUTHZ7Zc_lxGAzZWYCLlXVe72OYpnAYGo",
@@ -15,6 +15,50 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-set(ref(getDatabase()), {
-    name: 'Aritra Basu'
-});
+const db = getDatabase();
+
+set(ref(db), {
+    name: 'Adipta Basu',
+    age: 26,
+    isSingle: true,
+    location: {
+        city: 'Kolkata',
+        country: 'India'
+    }
+})
+    .then(() => {
+        console.log('Data is saved');
+    })
+    .catch((error) => console.log('This failed', error));
+
+set(ref(db, 'age'), 27);
+
+set(ref(db, 'location/city'), 'Ruby');
+
+update(ref(db), {
+    height: 160,
+    weight: 100
+})
+    .then(() => {
+        console.log('Data is saved');
+    })
+    .catch((error) => console.log('This failed', error));
+
+remove(ref(db, 'isSingle'))
+    .then(() => {
+        console.log('Data is removed');
+    })
+    .catch((error) => console.log('This failed', error));
+
+remove(ref(db))
+    .then(() => {
+        console.log('Data is removed');
+    })
+    .catch((error) => console.log('This failed', error));
+
+
+set(ref(db), null)
+    .then(() => {
+        console.log('Data is removed');
+    })
+    .catch((error) => console.log('This failed', error));
