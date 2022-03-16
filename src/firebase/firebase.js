@@ -1,6 +1,6 @@
 // import firebase from 'firebase';
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, update, remove, onValue, off, push } from 'firebase/database';
+import { getDatabase, ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded } from 'firebase/database';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBUTHZ7Zc_lxGAzZWYCLlXVe72OYpnAYGo",
@@ -154,4 +154,19 @@ onValue(ref(db, 'expenses'), (snapshot) => {
     console.log(expensesStore)
 }, { onlyOnce: false }, (e) => {
     console.log('Error is ', e);
+});
+
+onChildRemoved(ref(db, 'expenses'), (snapshot) => {
+    console.log('In remove');
+    console.log(snapshot.key, snapshot.val());
+});
+
+onChildChanged(ref(db, 'expenses'), (snapshot) => {
+    console.log('In Change');
+    console.log(snapshot.key, snapshot.val());
+});
+
+onChildAdded(ref(db, 'expenses'), (snapshot) => {
+    console.log('In Child added');
+    console.log(snapshot.key, snapshot.val());
 });
