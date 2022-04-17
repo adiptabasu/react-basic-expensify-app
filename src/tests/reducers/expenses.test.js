@@ -1,3 +1,4 @@
+import { expect, test } from '@jest/globals';
 import expencesReducer from '../../reducers/expenses';
 import expenses from '../fixtures/expenses';
 
@@ -51,4 +52,14 @@ test('should not update an expense if it is not found', () => {
     };
     const state = expencesReducer(expenses, action);
     expect(state).toEqual(expenses);
-})
+});
+
+test('should set expenses', () => {
+    const action = {
+        type: 'SET_EXPENSES',
+        expenses: [expenses[1]]
+    }
+    const state = expencesReducer(expenses, action);
+    expect(state).toEqual(
+        [expenses[1]]);
+});
