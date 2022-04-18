@@ -1,6 +1,6 @@
 // import { test, expect } from 'jest';
 import { expect, test, beforeEach } from '@jest/globals';
-import { addExpense, editExpense, removeExpense, startAddExpense, setExpenses } from '../../actions/expenses';
+import { addExpense, editExpense, removeExpense, startAddExpense, setExpenses, startSetExpenses, startRomoveExpense } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -23,6 +23,24 @@ test('should set up remove expense action object', () => {
         id: '123abc'
     });
 });
+
+test('should remove expense from firebase', (done) => {
+    const store = createMockStore({});
+    const id = expenses[2].id;
+    store.dispatch(startRomoveExpense({ id })).then(() => {
+        const actions = store.getActions();
+        // console.log(actions);
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id
+        });
+        onValue(ref(db, `expenses/${id}`), (snapshot) => {
+            expect(snapshot.val()).toBeFalsy();
+            done();
+        }, { onlyOnce: true });
+    });
+});
+
 test('should set up edit expense action object', () => {
     const action = editExpense({ id: '123abc', updates: { note: 'noteupdate' } });
     expect(action).toEqual({
@@ -122,3 +140,10 @@ test('should set up set expenses action object with data', () => {
         expenses
     })
 });
+
+// test('should fetch the expenses from firebase', async (done) => {
+//     const store = createMockStore();
+//     await store.dispatch(startSetExpenses());
+//     // console.log(data());
+//     await done();
+// });

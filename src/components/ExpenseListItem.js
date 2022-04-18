@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { removeExpense } from '../actions/expenses';
+import { startRomoveExpense } from '../actions/expenses';
 import moment from 'moment';
 import numeral from 'numeral';
 
 const ExpenseListItem = (props) => {
     let removeItem = () => {
-        props.dispatch(removeExpense({ id: props.id }));
+        props.dispatch(startRomoveExpense({ id: props.id }));
     };
     return (
         <div>

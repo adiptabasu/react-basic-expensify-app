@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense, removeExpense } from '../actions/expenses';
+import { editExpense, startRomoveExpense } from '../actions/expenses';
 
 const EditExpensePage = (props) => {
     let params = useParams();
@@ -19,7 +19,7 @@ const EditExpensePage = (props) => {
             }}
         />
         <button onClick={() => {
-            props.dispatch(removeExpense({ id: params.id }));
+            props.dispatch(startRomoveExpense({ id: params.id }));
             navigate('/');
         }}>Remove</button>
     </div>);

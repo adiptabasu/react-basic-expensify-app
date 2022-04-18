@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import db, { push, ref, onValue, get } from '../firebase/firebase';
+import db, { push, ref, onValue, remove } from '../firebase/firebase';
 const addExpense = (expense) => ({
     type: 'ADD_EXPENSE',
     expense
@@ -32,6 +32,14 @@ const removeExpense = ({ id = undefined } = {}) => ({
     type: 'REMOVE_EXPENSE',
     id
 });
+
+const startRomoveExpense = ({ id } = {}) => {
+    return (dispatch) => {
+        return remove(ref(db, `expenses/${id}`)).then(() => {
+            dispatch(removeExpense({ id }));
+        });
+    };
+};
 
 const editExpense = ({ id, updates }) => ({
     type: 'EDIT_EXPENSE',
@@ -66,26 +74,4 @@ const startSetExpenses = (expensesData = {}) => {
     };
 };
 
-// const startSetExpenses = (dispatch) => {
-//     return (dispatch) => {
-//         const dbRef = ref(db)
-//         return get(child(dbRef, 'expense')).then((snapshot) => {
-//             if (snapshot.exists()) {
-//                 const expenses = []
-//                 snapshot.forEach((childSnapshot) => {
-//                     expenses.push({
-//                         id: childSnapshot.key,
-//                         ...childSnapshot.val(),
-//                     });
-//                 });
-//                 dispatch(setExpenses(expenses))
-//             } else {
-//                 console.log("No data available");
-//             }
-//         }).catch((error) => {
-//             console.error(error);
-//         });
-//     }
-// }
-
-export { addExpense, removeExpense, editExpense, setExpenses, startSetExpenses };
+export { addExpense, removeExpense, editExpense, setExpenses, startSetExpenses, startRomoveExpense };
