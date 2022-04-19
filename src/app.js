@@ -9,6 +9,7 @@ import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import '../src/firebase/firebase';
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 // store.dispatch(addExpense({ description: 'water bill', amount: 4500 }));
 // store.dispatch(addExpense({ description: 'gas bill' }));
@@ -31,4 +32,14 @@ ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
 store.dispatch(startSetExpenses()).then(() => {
     ReactDOM.render(jsx, document.getElementById('app'));
+});
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log('Log in');
+    }
+    else {
+        console.log('Log Out');
+    }
 });

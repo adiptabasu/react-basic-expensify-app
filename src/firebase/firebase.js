@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from "firebase/app";
 import { getDatabase, ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded, get } from 'firebase/database';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyBUTHZ7Zc_lxGAzZWYCLlXVe72OYpnAYGo",
@@ -40,4 +41,6 @@ if (getApps().length <= 0) {
 
 const db = getDatabase();
 
-export { ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded, get, db as default };
+const googleAuthProvider = new GoogleAuthProvider();
+
+export { ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded, get, googleAuthProvider, getAuth, signInWithPopup, db as default };
