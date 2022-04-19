@@ -1,5 +1,6 @@
+import { child } from 'firebase/database';
 import { v4 as uuid } from 'uuid';
-import db, { push, ref, onValue, remove } from '../firebase/firebase';
+import db, { push, ref, onValue, remove, update, get } from '../firebase/firebase';
 const addExpense = (expense) => ({
     type: 'ADD_EXPENSE',
     expense
@@ -47,12 +48,28 @@ const editExpense = ({ id, updates }) => ({
     updates
 });
 
+// const startEditExpense = ({ id, updates }) => {
+//     return (dispatch) => {
+//         return update(ref(db, `expenses/${id}`), updates).then(() => {
+//             dispatch(editExpense(id, updates));
+//         });
+//     };
+// }
+
+const startEditExpense = ({ id, updates }) => {
+    return (dispatch) => {
+        return update(ref(db, `expenses/${id}`), updates).then(() => {
+            dispatch(editExpense({ id, updates }));
+        });
+    };
+};
+
 const setExpenses = (expenses) => ({
     type: 'SET_EXPENSES',
     expenses
 });
 
-const startSetExpenses = (expensesData = {}) => {
+const startSetExpenses_old = (expensesData = {}) => {
     return (dispatch) => {
         return onValue(ref(db, 'expenses'), (snapshot) => {
             const expenses = [];
@@ -74,4 +91,21 @@ const startSetExpenses = (expensesData = {}) => {
     };
 };
 
-export { addExpense, removeExpense, editExpense, setExpenses, startSetExpenses, startRomoveExpense };
+const startSetExpenses = (expensesData = {}) => {
+    return (dispatch) => {
+        let expenses = [];
+        return get(child(ref(db), 'expenses')).then((snapshot) => {
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnap) => {
+                    expenses.push({
+                        id: childSnap.key,
+                        ...childSnap.val()
+                    })
+                });
+            }
+            dispatch(setExpenses(expenses))
+        });
+    }
+};
+
+export { addExpense, removeExpense, editExpense, setExpenses, startSetExpenses, startRomoveExpense, startEditExpense };

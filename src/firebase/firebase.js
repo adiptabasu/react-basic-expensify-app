@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getDatabase, ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded } from 'firebase/database';
+import { getDatabase, ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded, get } from 'firebase/database';
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyBUTHZ7Zc_lxGAzZWYCLlXVe72OYpnAYGo",
@@ -40,4 +40,4 @@ if (getApps().length <= 0) {
 
 const db = getDatabase();
 
-export { ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded, db as default };
+export { ref, set, update, remove, onValue, off, push, onChildRemoved, onChildChanged, onChildAdded, get, db as default };
