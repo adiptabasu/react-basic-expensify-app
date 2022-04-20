@@ -19,4 +19,11 @@ const startLogin = () => {
     }
 };
 
-export { startLogin };
+const startLogout = () => {
+    return () => {
+        const auth = getAuth();
+        return auth.signOut();
+    }
+}
+
+export { startLogin, startLogout };

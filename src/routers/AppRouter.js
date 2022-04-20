@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Router, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import AddExpensePage from '../components/AddExpensePage';
 import EditExpensePage from '../components/EditExpensePage';
 import ExpenseDashboardPage from '../components/ExpenseDashboardPage';
@@ -8,8 +9,12 @@ import HelpPage from '../components/HelpPage';
 import LoginPage from '../components/LoginPage';
 import NotFoundPage from '../components/NotFoundPage';
 
+let history = createBrowserHistory();
+// let navigate = useNavigate();
+// let history=His;
+
 const AppRouter = () => (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
         <div><Header /></div>
         <Routes>
             <Route
@@ -37,7 +42,7 @@ const AppRouter = () => (
                 element={<NotFoundPage />}
             />
         </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
 );
 
-export default AppRouter;
+export { AppRouter as default, history };

@@ -9,17 +9,15 @@ const LoginPage = (props) => {
     // const navigate = useNavigate();
     return (
         <div>
-            <button onClick={() => {
-                props.dispatch(startLogin());
-                // navigate('/dashboard');
-            }}>Login</button>
+            <button onClick={props.startLogin}>Login</button>
         </div>
     );
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startLogin,
-    dispatch
+    // startLogin,
+    // dispatch
+    startLogin: () => dispatch(startLogin())
 });
 
 const ConnectedLoginPage = connect(undefined, mapDispatchToProps)(LoginPage);

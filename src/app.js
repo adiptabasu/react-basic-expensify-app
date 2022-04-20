@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import AppRouter from './routers/AppRouter';
+import AppRouter, { history } from './routers/AppRouter';
+// import history from 'history/browser';
 import store from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
 import getVisibleExpences from './selectors/expenses';
@@ -36,10 +37,20 @@ store.dispatch(startSetExpenses()).then(() => {
 
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
+    console.log('Here bro')
+    console.log(user);
+    console.log(history)
     if (user) {
-        console.log('Log in');
+        // console.log('logged in');
+        history.push('/dashboard');
+        // navigate('/dashboard');
+        // store.dispatch(startSetExpenses()).then(() => {
+        //     ReactDOM.render(jsx, document.getElementById('app'));
+        // });
     }
     else {
-        console.log('Log Out');
+        // console.log('logged out');
+        history.push('/');
+        // ReactDOM.render(jsx, document.getElementById('app'));
     }
 });
