@@ -8,35 +8,54 @@ import Header from '../components/Header';
 import HelpPage from '../components/HelpPage';
 import LoginPage from '../components/LoginPage';
 import NotFoundPage from '../components/NotFoundPage';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 let history = createBrowserHistory();
 // let navigate = useNavigate();
 // let history=His;
 
 const AppRouter = () => (
+
     <HistoryRouter history={history}>
-        <div><Header /></div>
+        {/* <div><Header /></div> */}
         <Routes>
             <Route
                 path="/"
-                element={<LoginPage />}
+                element={
+                    <PublicRoute>
+                        <LoginPage />
+                    </PublicRoute>
+                }
             />
             <Route
                 path="/dashboard"
-                element={<ExpenseDashboardPage />}
+                element={
+                    <PrivateRoute>
+                        <ExpenseDashboardPage />
+                    </PrivateRoute>
+                }
             />
             <Route
                 path="/create"
-                element={<AddExpensePage />}
+                element={
+                    <PrivateRoute>
+                        <AddExpensePage />
+                    </PrivateRoute>
+                }
             />
             <Route
                 path="/edit/:id"
-                element={<EditExpensePage />}
+                element={
+                    <PrivateRoute>
+                        <EditExpensePage />
+                    </PrivateRoute>
+                }
             />
-            <Route
+            {/* <Route
                 path="/help"
                 element={<HelpPage />}
-            />
+            /> */}
             <Route
                 path="*"
                 element={<NotFoundPage />}

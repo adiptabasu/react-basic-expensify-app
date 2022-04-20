@@ -26,4 +26,13 @@ const startLogout = () => {
     }
 }
 
-export { startLogin, startLogout };
+const login = (uid) => ({
+    type: 'LOGIN',
+    uid
+});
+
+const logout = () => ({
+    type: 'LOGOUT'
+});
+
+export { startLogin, startLogout, login, logout };

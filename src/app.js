@@ -5,7 +5,7 @@ import AppRouter, { history } from './routers/AppRouter';
 // import history from 'history/browser';
 import store from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
-import getVisibleExpences from './selectors/expenses';
+import { login, logout } from './actions/auth';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
@@ -31,26 +31,33 @@ ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
 // console.log('setupData', setupData);
 
-store.dispatch(startSetExpenses()).then(() => {
-    ReactDOM.render(jsx, document.getElementById('app'));
-});
+// store.dispatch(startSetExpenses()).then(() => {
+//     ReactDOM.render(jsx, document.getElementById('app'));
+// });
+
+let hasRendered = false;
+
+const renderApp = () => {
+    if (!hasRendered) {
+        ReactDOM.render(jsx, document.getElementById('app'));
+        hasRendered = true;
+    }
+}
 
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
-    console.log('Here bro')
-    console.log(user);
-    console.log(history)
     if (user) {
-        // console.log('logged in');
-        history.push('/dashboard');
-        // navigate('/dashboard');
-        // store.dispatch(startSetExpenses()).then(() => {
-        //     ReactDOM.render(jsx, document.getElementById('app'));
-        // });
+        store.dispatch(login(user.uid));
+        store.dispatch(startSetExpenses()).then(() => {
+            renderApp();
+        });
+        if (history.location.pathname == '/') {
+            history.push('/dashboard');
+        }
     }
     else {
-        // console.log('logged out');
+        store.dispatch(logout());
+        renderApp();
         history.push('/');
-        // ReactDOM.render(jsx, document.getElementById('app'));
     }
 });

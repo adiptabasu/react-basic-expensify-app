@@ -8,7 +8,7 @@ const Header = (props) => (
         <header>
             <h1>Expensify</h1>
             <NavLink
-                to="/"
+                to="/dashboard"
                 // activeClassName="is-active"
                 className={(props) => ("nav-link " + (props.isActive ? "is-active" : undefined))}
             >Home</NavLink>
