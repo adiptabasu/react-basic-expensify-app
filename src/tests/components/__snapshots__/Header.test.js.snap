@@ -8,7 +8,7 @@ exports[`should render the header correctly 1`] = `
     </h1>
     <NavLink
       className={[Function]}
-      to="/"
+      to="/dashboard"
     >
       Home
     </NavLink>
