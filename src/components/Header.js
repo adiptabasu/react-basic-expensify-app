@@ -1,18 +1,21 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
 
 const Header = (props) => (
     <div>
-        <header>
-            <h1>Expensify</h1>
-            <NavLink
-                to="/dashboard"
-                // activeClassName="is-active"
-                className={(props) => ("nav-link " + (props.isActive ? "is-active" : undefined))}
-            >Home</NavLink>
-            <NavLink
+        <header className="header">
+            <div className="content-container">
+                <div className="header__content">
+                    {/* <h1>Expensify</h1> */}
+                    <Link
+                        to="/dashboard"
+                        className="header__title"
+                    // activeClassName="is-active"
+                    // className={(props) => ("nav-link " + (props.isActive ? "is-active" : undefined))}
+                    ><h1>Expensify</h1></Link>
+                    {/* <NavLink
                 to="/create"
                 // activeClassName="is-active"
                 className={(props) => ("nav-link " + (props.isActive ? "is-active" : undefined))}
@@ -26,10 +29,12 @@ const Header = (props) => (
                 to="/help"
                 // activeClassName="is-active"
                 className={(props) => ("nav-link " + (props.isActive ? "is-active" : undefined))}
-            >Help</NavLink>
-            <button onClick={props.startLogout}>
-                Logout
-            </button>
+            >Help</NavLink> */}
+                    <button className="button button--link" onClick={props.startLogout}>
+                        Logout
+                </button>
+                </div>
+            </div>
         </header>
     </div>
 );

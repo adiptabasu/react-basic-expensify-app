@@ -10,18 +10,28 @@ const EditExpensePage = (props) => {
     const expenseSelected = props.expenses.find((exp) => (exp.id == params.id));
     console.log(expenseSelected);
     return (<div>
-        <ExpenseForm
-            expense={expenseSelected}
-            onSubmit={(expense) => {
-                console.log('updated', expense);
-                props.dispatch(startEditExpense({ id: params.id, updates: expense }));
-                navigate('/');
-            }}
-        />
-        <button onClick={() => {
-            props.dispatch(startRomoveExpense({ id: params.id }));
-            navigate('/');
-        }}>Remove</button>
+        <div className="page-header">
+            <div className="content-container">
+                <h1 className="page-header__title">Edit Expense</h1>
+            </div>
+        </div>
+        <div className="content-container">
+            <ExpenseForm
+                expense={expenseSelected}
+                onSubmit={(expense) => {
+                    console.log('updated', expense);
+                    props.dispatch(startEditExpense({ id: params.id, updates: expense }));
+                    navigate('/');
+                }}
+            />
+            <button
+                onClick={() => {
+                    props.dispatch(startRomoveExpense({ id: params.id }));
+                    navigate('/');
+                }}
+                className="button button-secondary"
+            >Remove</button>
+        </div>
     </div>);
 };
 
